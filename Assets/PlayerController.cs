@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public InputManager input;
     public int curJumpCount;
+
     public bool canWallJump;
+    public Vector3 wallNormal;
     
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -25,15 +27,23 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() {
         move(input.moveDirection);
 
+        
+        
         if(input.flagJump){
             jump();
+            input.flagJump = false;
         }
+        
+
+
+
 
         if(isGrounded() && !input.flagJump){
             curJumpCount = maxJumpCount;
         }
         input.flagJump = false;
     }
+    #region Movement Code
 
     void move(float dir){
         rb.velocity = new Vector3(dir * speed, rb.velocity.y,0);
@@ -45,7 +55,12 @@ public class PlayerController : MonoBehaviour
             curJumpCount--;
         }
     }
+    void wallJump(){
 
+    }
+    #endregion
+
+    #region Helpers
     bool isGrounded(){
         RaycastHit ray1,ray2;
         Physics.Raycast(transform.position + new Vector3(-0.45f,-1f,0), Vector3.down, out ray1);
@@ -53,6 +68,9 @@ public class PlayerController : MonoBehaviour
 
         return (ray1.distance < .1f && ray2.distance < .1f);
     }
+
+
+    #endregion
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
