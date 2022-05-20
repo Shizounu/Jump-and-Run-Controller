@@ -17,7 +17,8 @@ public class InputManager : MonoBehaviour
         
         inputActions.Player.Move.canceled += ctx => moveDirection = 0;
 
-        inputActions.Player.Jump.performed += _ => flagJump = true;
+        inputActions.Player.Jump.canceled += _ => flagJump = true;
+        inputActions.Player.Jump.performed += _ => flagHighJump = true;
     }
 
     public InputActions inputActions;
@@ -25,6 +26,7 @@ public class InputManager : MonoBehaviour
     [Header("Input Flags")]
     public float moveDirection;
     public bool flagJump;
+    public bool flagHighJump;
 
     private void OnEnable() {
         inputActions.Enable();
