@@ -19,6 +19,7 @@ public class PlayerController2D : MonoBehaviour
     [ReadOnly, SerializeField] private float coyoteTime;
     [ReadOnly, SerializeField] public bool bufferedJump;
     [ReadOnly, SerializeField] public bool bufferedHighJump;
+    
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         input = InputManager.Instance;
@@ -85,6 +86,6 @@ public class PlayerController2D : MonoBehaviour
     bool isGrounded(){
         RaycastHit2D ray1;
         ray1 = Physics2D.Raycast(transform.position + new Vector3(0,-1.005f,0), Vector3.down);
-       return ray1.distance < .2f;
+        return ray1.distance < .2f;
     }
 }
